@@ -13,13 +13,14 @@ $_SESSION['count']=0;
 $level=$_GET['level'];
 
 $_SESSION['answer']=[];
-for($i=0;$i<$level;$i++){
-    if($i==0){
-        $_SESSION['answer'][]=rand(1,9);
-    }else{
-        $_SESSION['answer'][]=rand(0,9);
+while(true){
+    $_SESSION['answer'][]=rand(0,9);
+    $_SESSION['answer']=array_unique($_SESSION['answer']);
+    if(count($_SESSION['answer'])==$level){
+        break;
     }
 }
+
 
 var_dump($_SESSION['answer']);
 ?>

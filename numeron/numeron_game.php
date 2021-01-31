@@ -10,16 +10,18 @@
 session_start();
 $_SESSION['count']++;
 $level=$_POST['level'];
-$kaitou=$_POST['kaitou'];
+$kaitou=str_split($_POST['kaitou']);
 $a=0;
 $b=0;
 
-for($j=0;$j<$level;$j++){
-    if($_SESSION['answer'][$j]==){
+var_dump($kaitou);
+
+for($i=0;$i<$level;$i++){
+    if(intval($kaitou[$i]==$_SESSION['answer'][$i])){
         $a++;
     }else{
-        for($k=0;$k<$level;$k++){
-            if(==$_SESSION['answer'][$k]){
+        for($j=0;$j<$level;$j++){
+            if(intval($kaitou[$i])==$_SESSION['answer'][$j]){
                 $b++;
             }
         }
