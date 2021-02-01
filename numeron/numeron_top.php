@@ -6,10 +6,15 @@
 </head>
 <body>
 <h1>NUMERON</h1>
-<h3>レベルを選択してください。</h3>
-<a href="numeron.php?level=2">かんたん【２桁】</a>
-<a href="numeron.php?level=3">ふつう【３桁】</a>
-<a href="numeron.php?level=4">むずかしい【４桁】</a>
-<a href="numeron.php?level=5">激ムズ【５桁】</a>
+<h3>名前（30文字以内）を入力し、レベルを選択してください。</h3>
+<form method="post" action="numeron.php">
+<input type="text" name="name">
+<br />
+<br />
+<input type="submit" name="level2" value="かんたん【２桁】">
+<input type="submit" name="level3" value="ふつう【３桁】">
+<input type="submit" name="level4" value="むずかしい【４桁】">
+<input type="submit" name="level5" value="激ムズ【５桁】">
+</form>
 </body>
 </html>

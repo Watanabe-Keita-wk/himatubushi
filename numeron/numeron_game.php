@@ -7,16 +7,21 @@
 <body>
 <h1>NUMERON</h1>
 <?php
+date_default_timezone_set('Asia/Tokyo');
+//ランキングに二重登録防止
 session_start();
 if(!empty($_SESSION['game']) && $_SESSION['game']==true){
     $level=$_POST['level'];
+    $name=$_POST['name'];
     $kaitou=str_split($_POST['kaitou']);
     $a=0;
     $b=0;
 
+//回答が正しく入力されているか確認
     if(preg_match('/^[0-9]{'.$level.'}$/',$_POST['kaitou']) && count(array_unique($kaitou))==$level){
         $_SESSION['count']++;
 
+        //回答の正誤を確認
         for($i=0;$i<$level;$i++){
             if(intval($kaitou[$i]==$_SESSION['answer'][$i])){
                 $a++;
@@ -29,12 +34,37 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
             }
         }
 
+        //正解した時の表示
         if($a==$level){
-            print '<h3>正解！</h3>';
-            print 'チャレンジ回数'.$_SESSION['count'].'回でクリアしました。<br />';
-            print '<a href="numeron_top.php">トップへ戻る</a>';
-            session_destroy();
-            exit();
+            try{
+                $cleared_at=date("Y-m-d H:i:s");
+
+                $dsn='mysql:dbname=himatubushi;host=localhost;charset=utf8';
+                $user='root';
+                $password='';
+                $dbh=new PDO($dsn,$user,$password);
+                $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
+                $sql='INSERT INTO numeron (name,level,kaisuu,cleared_at) VALUES (?,?,?,?)';
+                $stmt=$dbh->prepare($sql);
+                $data[]=$name;
+                $data[]=$level;
+                $data[]=$_SESSION['count'];
+                $data[]=$cleared_at;
+                $stmt->execute($data);
+
+                $dbh=null;
+
+                print '<h3>正解！</h3>';
+                print 'チャレンジ回数'.$_SESSION['count'].'回でクリアしました。<br /><br />';
+                print '<a href="numeron_top.php">トップに戻る</a>';
+                print '<a href="numeron_rank.php?cleared_at='.$cleared_at.'">ランキングを確認する</a>';
+                session_destroy();
+                exit();
+            }catch(Exception $e){
+                print 'ただいま障害により大変ご迷惑をお掛けしております。';
+                exit();
+            }
         }
 
         print '数字と位置が同じ数字：'.$a.'個　';
@@ -47,13 +77,13 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
         }
     }
 
-    //var_dump($kaitou);
-?>
 
+?>
     <h3><?php print $level ?>桁の数字を入力してください。</h3>
     <form method="post" action="numeron_game.php">
     <input type="text" name="kaitou" value="<?php print $_POST['kaitou']; ?>">
     <input type="hidden" name="level" value="<? print $level; ?>">
+    <input type="hidden" name="name" value="<? print $name; ?>">
     <input type="submit" value="回答する">
 <?php
 }else{
