@@ -9,7 +9,7 @@
 <?php
 session_start();
 $_SESSION['count']=0;
-
+$_SESSION['game']=true;
 $level=$_GET['level'];
 
 $_SESSION['answer']=[];
@@ -22,9 +22,9 @@ while(true){
 }
 
 
-var_dump($_SESSION['answer']);
+//var_dump($_SESSION['answer']);
 ?>
-<h3><?php print $level ?>つのそれぞれ異なる数字を入力してください。</h3>
+<h3>０〜９のそれぞれ異なる数字を<?php print $level ?>つ入力してください。</h3>
 
 <form method="post" action="numeron_game.php">
 <input type="text" name="kaitou">
