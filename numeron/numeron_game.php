@@ -13,6 +13,7 @@ session_start();
 if(!empty($_SESSION['game']) && $_SESSION['game']==true){
     $level=$_POST['level'];
     $name=$_POST['name'];
+    $_SESSION['history'][]=$_POST['kaitou'];
     $kaitou=str_split($_POST['kaitou']);
     $a=0;
     $b=0;
@@ -33,6 +34,8 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
                 }
             }
         }
+        $_SESSION['history_a'][]=$a;
+        $_SESSION['history_b'][]=$b;
 
         //正解した時の表示
         if($a==$level){
@@ -58,7 +61,7 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
                 print '<h3>正解！</h3>';
                 print 'チャレンジ回数'.$_SESSION['count'].'回でクリアしました。<br /><br />';
                 print '<a href="numeron_top.php">トップに戻る</a>';
-                print '<a href="numeron_rank.php?cleared_at='.$cleared_at.'">ランキングを確認する</a>';
+                print '<a href="numeron_rank.php?cleared_at='.$cleared_at.'&level='.$level.'">ランキングを確認する</a>';
                 session_destroy();
                 exit();
             }catch(Exception $e){
@@ -79,12 +82,31 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
 
 
 ?>
-    <h3><?php print $level ?>桁の数字を入力してください。</h3>
+    <h4>チャレンジ回数：<?php print $_SESSION['count']; ?>回</h4>
     <form method="post" action="numeron_game.php">
-    <input type="text" name="kaitou" value="<?php print $_POST['kaitou']; ?>">
-    <input type="hidden" name="level" value="<? print $level; ?>">
-    <input type="hidden" name="name" value="<? print $name; ?>">
-    <input type="submit" value="回答する">
+        <input type="text" name="kaitou" value="<?php print $_POST['kaitou']; ?>">
+        <input type="hidden" name="level" value="<? print $level; ?>">
+        <input type="hidden" name="name" value="<? print $name; ?>">
+        <input type="submit" value="回答する">
+    </form>
+    【 過去の回答 】
+    <table>
+    <tr>
+        <th>あなたの回答</th>
+        <th>数字と位置が同じ</th>
+        <th>数字だけが同じ</th>
+    </tr>
+<?php
+    for($k=0;$k<count($_SESSION['history']);$k++){
+        print '<tr>';
+        print '<td>'.$_SESSION['history'][$k].'</td>';
+        print '<td>'.$_SESSION['history_a'][$k].'</td>';
+        print '<td>'.$_SESSION['history_b'][$k].'</td>';
+        print '</tr>';
+    }
+?>
+    </table>
+
 <?php
 }else{
     print 'エラーが発生しました。<br />';
@@ -92,6 +114,6 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
 }
 ?>
 
-</form>
+
 </body>
 </html>

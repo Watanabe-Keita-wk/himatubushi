@@ -12,6 +12,10 @@ if(0 < mb_strlen($_POST['name'],'utf-8') && mb_strlen($_POST['name'],'utf-8') <=
     $name=$_POST['name'];
     $_SESSION['count']=0;
     $_SESSION['game']=true;
+    $_SESSION['history']=[];
+    $_SESSION['history_a']=[];
+    $_SESSION['history_b']=[];
+    
     for($i=2;$i<=5;$i++){
         if(isset($_POST['level'.$i])==true){
             $level=$i;
