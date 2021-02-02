@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
 <title>NUMERON</title>
 </head>
 <body>
@@ -49,7 +50,11 @@ try{
 <?php
 for($i=0;$i<10;$i++){
     if(isset($rec[$i])==true){
-        print '<tr>';
+        if($cleared_at==$rec[$i]['cleared_at']){
+            print '<tr style="background-color: rgb(245, 185, 185);">';
+        }else{
+            print '<tr>';
+        }
         print '<td>'.($i+1).'</td>';
         print '<td>'.$rec[$i]['name'].'</td>';
         print '<td>'.$rec[$i]['kaisuu'].'</td>';
@@ -61,7 +66,9 @@ for($i=0;$i<10;$i++){
 </tr>
 </table>
 <br />
-<a href="numeron_top.php">トップへ戻る</a>
+<div style="text-align: center;">
+    <a class="button" href="numeron_top.php">トップへ戻る</a>
+</div>
 </form>
 </body>
 </html>

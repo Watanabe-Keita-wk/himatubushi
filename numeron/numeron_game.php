@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
 <title>NUMERON</title>
 </head>
 <body>
@@ -17,7 +18,6 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
     $kaitou=str_split($_POST['kaitou']);
     $a=0;
     $b=0;
-
 //回答が正しく入力されているか確認
     if(preg_match('/^[0-9]{'.$level.'}$/',$_POST['kaitou']) && count(array_unique($kaitou))==$level){
         $_SESSION['count']++;
@@ -58,10 +58,15 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
 
                 $dbh=null;
 
+                print '<div class="text" style="font-size: 30px;color: #rgb(128, 128, 128);">';
                 print '<h3>正解！</h3>';
                 print 'チャレンジ回数'.$_SESSION['count'].'回でクリアしました。<br /><br />';
-                print '<a href="numeron_top.php">トップに戻る</a>';
-                print '<a href="numeron_rank.php?cleared_at='.$cleared_at.'&level='.$level.'">ランキングを確認する</a>';
+                print '</div>';
+
+                print '<div id="choice">';
+                print '<a class="button" href="numeron_top.php">トップに戻る</a>';
+                print '<a class="button" href="numeron_rank.php?cleared_at='.$cleared_at.'&level='.$level.'">ランキングを確認する</a>';
+                print '</div>';
                 session_destroy();
                 exit();
             }catch(Exception $e){
@@ -70,26 +75,35 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
             }
         }
 
+        print '<div class="text">';
         print '数字と位置が同じ数字：'.$a.'個　';
         print '位置は違うが数字が同じ：'.$b.'個';
+        print '</div>';
     }else{
+        print '<div class="text">';
         print '入力が正しくありません。０〜９のそれぞれ異なる数字を'.$level.'つ入力してください。<br />';
         print '正しい入力例：';
         for($k=0;$k<$level;$k++){
             print $k;
         }
+        print '</div>';
     }
 
 
 ?>
-    <h4>チャレンジ回数：<?php print $_SESSION['count']; ?>回</h4>
-    <form method="post" action="numeron_game.php">
-        <input type="text" name="kaitou" value="<?php print $_POST['kaitou']; ?>">
-        <input type="hidden" name="level" value="<? print $level; ?>">
-        <input type="hidden" name="name" value="<? print $name; ?>">
-        <input type="submit" value="回答する">
-    </form>
-    【 過去の回答 】
+    <div class="text">
+        <h4>チャレンジ回数：<?php print $_SESSION['count']; ?>回</h4>
+        <form method="post" action="numeron_game.php">
+            <input type="text" name="kaitou" value="<?php print $_POST['kaitou']; ?>">
+            <input type="hidden" name="level" value="<? print $level; ?>">
+            <input type="hidden" name="name" value="<? print $name; ?>">
+            <input type="submit" value="回答する">
+        </form>
+        <br />
+        <br />
+        【 過去の回答 】
+    </div>
+
     <table>
     <tr>
         <th>あなたの回答</th>
@@ -109,8 +123,10 @@ if(!empty($_SESSION['game']) && $_SESSION['game']==true){
 
 <?php
 }else{
+    print '<div class="text" style="font-size: 20px">';
     print 'エラーが発生しました。<br />';
-    print '<a href="numeron_top.php">トップへ戻る</a>';
+    print '<a class="button" href="numeron_top.php">トップへ戻る</a>';
+    print '</div>';
 }
 ?>
 

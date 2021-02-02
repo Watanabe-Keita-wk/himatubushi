@@ -1,0 +1,82 @@
+body{
+    background-color: #899496;
+}
+
+h1{
+    text-align: center;
+    font-size: 80px;
+    margin: 50px;
+}
+
+table{
+    width: 60%;
+    margin: 0 auto;
+    background-color: white;
+    border-spacing: 0;
+    border-radius: 5px;
+}
+
+table th:first-child{
+    border-radius: 5px 0 0 0;
+}
+
+table th:last-child{
+    border-radius: 0 5px 0 0;
+    border-right: 1px solid #525b5c;
+}
+
+table th{
+    text-align: center;
+    color:white;
+    background: linear-gradient(#5e6160,#212525);
+    border-left: 1px solid #525b5c;
+    border-top: 1px solid #525b5c;
+    border-bottom: 1px solid #525b5c;
+    box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+    padding: 10px 0;
+}
+
+table td{
+    text-align: center;
+    border-left: 1px solid #a8b7c5;
+    border-bottom: 1px solid #a8b7c5;
+    border-top:none;
+    box-shadow: 0px -3px 5px 1px #eee inset;
+    padding: 10px 0;
+}
+
+table td:last-child{
+    border-right: 1px solid #a8b7c5;
+}
+
+table tr:last-child td:first-child {
+    border-radius: 0 0 0 5px;
+}
+
+table tr:last-child td:last-child {
+    border-radius: 0 0 5px 0;
+}
+
+.text{
+    font-weight: 900;
+    text-align: center;
+}
+
+#choice{
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    margin:10px 5px;
+    display: inline-block;
+    color: black;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: linear-gradient(#ffffff,#9ba4b3);
+    cursor: pointer;
+    text-decoration: none;
+}
